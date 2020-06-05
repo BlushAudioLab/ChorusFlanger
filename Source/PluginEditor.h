@@ -34,7 +34,12 @@ private:
     ChorusFlangerAudioProcessor& processor;
 
     Slider mDryWetSlider;
+    Slider mRateSlider;
+    Slider mDepthSlider;
+    Slider mPhaseOffsetSlider;
     Slider mFeedbackSlider;
+    
+    /* The button/menu for selecting between chorus and flange will go here*/
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChorusFlangerAudioProcessorEditor)
 };

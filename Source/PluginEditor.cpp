@@ -36,11 +36,57 @@ ChorusFlangerAudioProcessorEditor::ChorusFlangerAudioProcessorEditor (ChorusFlan
     mDryWetSlider.onDragStart = [dryWetParameter] { dryWetParameter->beginChangeGesture(); }; //lambda for what happens when you start dragging the slider
     mDryWetSlider.onDragEnd = [dryWetParameter] { dryWetParameter->endChangeGesture(); }; //lambda for what happens when you stop moving the slider
     
+    /*This bit is the Rate Slider*/
+    
+    AudioParameterFloat* rateParameter = (AudioParameterFloat*)params.getUnchecked(2); //set to 0 because it is the 1st parameter - indexing from 0
+    
+    mRateSlider.setBounds(100, 0, 100, 100); //sets position and size
+    mRateSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag); //sets style
+    mRateSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0); //gets rid of the slider text box from the UI
+    mRateSlider.setRange(rateParameter->range.start, rateParameter->range.end); //sets the range
+    mRateSlider.setValue(*rateParameter); //sets the slider value to the current value of the dry wet parameter in the processor
+    addAndMakeVisible(mRateSlider); //makes the slider visible on the screen
+
+    mRateSlider.onValueChange = [this, rateParameter] { *rateParameter = mRateSlider.getValue(); }; //lambda function to update slider when the parameter value is changed
+    mRateSlider.onDragStart = [rateParameter] { rateParameter->beginChangeGesture(); }; //lambda for what happens when you start dragging the slider
+    mRateSlider.onDragEnd = [rateParameter] { rateParameter->endChangeGesture(); }; //lambda for what happens when you stop moving the slider
+    
+    /*This bit is the Depth Slider*/
+       
+    AudioParameterFloat* depthParameter = (AudioParameterFloat*)params.getUnchecked(1); //set to 0 because it is the 1st parameter - indexing from 0
+       
+    mDepthSlider.setBounds(200, 0, 100, 100); //sets position and size
+    mDepthSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag); //sets style
+    mDepthSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0); //gets rid of the slider text box from the UI
+    mDepthSlider.setRange(depthParameter->range.start, depthParameter->range.end); //sets the range
+    mDepthSlider.setValue(*depthParameter); //sets the slider value to the current value of the dry wet parameter in the processor
+    addAndMakeVisible(mDepthSlider); //makes the slider visible on the screen
+
+    mDepthSlider.onValueChange = [this, depthParameter] { *depthParameter = mDepthSlider.getValue(); }; //lambda function to update slider when the parameter value is changed
+    mDepthSlider.onDragStart = [depthParameter] { depthParameter->beginChangeGesture(); }; //lambda for what happens when you start dragging the slider
+    mDepthSlider.onDragEnd = [depthParameter] { depthParameter->endChangeGesture(); }; //lambda for what happens when you stop moving the slider
+    
+    /*This bit is the Depth Slider*/
+       
+    AudioParameterFloat* phaseOffsetParameter = (AudioParameterFloat*)params.getUnchecked(3); //set to 0 because it is the 1st parameter - indexing from 0
+       
+    mPhaseOffsetSlider.setBounds(0, 100, 100, 100); //sets position and size
+    mPhaseOffsetSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag); //sets style
+    mPhaseOffsetSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0); //gets rid of the slider text box from the UI
+    mPhaseOffsetSlider.setRange(phaseOffsetParameter->range.start, phaseOffsetParameter->range.end); //sets the range
+    mPhaseOffsetSlider.setValue(*phaseOffsetParameter); //sets the slider value to the current value of the dry wet parameter in the processor
+    addAndMakeVisible(mPhaseOffsetSlider); //makes the slider visible on the screen
+
+    mPhaseOffsetSlider.onValueChange = [this, phaseOffsetParameter] { *phaseOffsetParameter = mPhaseOffsetSlider.getValue(); }; //lambda function to update slider when the parameter value is changed
+    mPhaseOffsetSlider.onDragStart = [phaseOffsetParameter] { phaseOffsetParameter->beginChangeGesture(); }; //lambda for what happens when you start dragging the slider
+    mPhaseOffsetSlider.onDragEnd = [phaseOffsetParameter] { phaseOffsetParameter->endChangeGesture(); }; //lambda for what happens when you stop moving the slider
+    
+    
     /*This bit is the Feedback Slider*/
     
     AudioParameterFloat* mFeedbackParameter = (AudioParameterFloat*)params.getUnchecked(4); //set to 1 because it is the 2nd parameter - indexing from 0
     
-    mFeedbackSlider.setBounds(100, 0, 100, 100); //sets the position and size
+    mFeedbackSlider.setBounds(300, 0, 100, 100); //sets the position and size
     mFeedbackSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag); //sets style
     mFeedbackSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0); //gets rid of the slider text box from the UI
     mFeedbackSlider.setRange(mFeedbackParameter->range.start, mFeedbackParameter->range.end); //sets the range
@@ -51,20 +97,15 @@ ChorusFlangerAudioProcessorEditor::ChorusFlangerAudioProcessorEditor (ChorusFlan
     mFeedbackSlider.onDragStart = [mFeedbackParameter] { mFeedbackParameter->beginChangeGesture(); }; //lambda for what happens when you start dragging the slider
     mFeedbackSlider.onDragEnd = [mFeedbackParameter] { mFeedbackParameter->endChangeGesture(); }; //lambda for what happens when you stop moving the slider
     
-    /*This bit is the Feedback Slider*/
     
-    //AudioParameterFloat* mDelayTimeParameter = (AudioParameterFloat*)params.getUnchecked(2); //set to 2 because it is the 3rd parameter - indexing from 0
     
-    //mDelayTimeSlider.setBounds(200, 0, 100, 100); //sets the position and size
-    //mDelayTimeSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag); //sets style
-    //mDelayTimeSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0); //gets rid of the slider text box from the UI
-    //mDelayTimeSlider.setRange(mDelayTimeParameter->range.start, mDelayTimeParameter->range.end); //sets the range
-    //mDelayTimeSlider.setValue(*mDelayTimeParameter); //sets the slider value to the current value of the dry wet parameter in the processor
-    //addAndMakeVisible(mDelayTimeSlider); //makes the slider visible on the screen
+    /*
+     
+     This is where the button for selecting the Effect Type will go
+     
+     
+     */
     
-    //mDelayTimeSlider.onValueChange = [this, mDelayTimeParameter] { *mDelayTimeParameter = mDelayTimeSlider.getValue(); }; //lambda function to update slider when the parameter value is changed
-    //mDelayTimeSlider.onDragStart = [mDelayTimeParameter] { mDelayTimeParameter->beginChangeGesture(); }; //lambda for what happens when you start dragging the slider
-    //mDelayTimeSlider.onDragEnd = [mDelayTimeParameter] { mDelayTimeParameter->endChangeGesture(); }; //lambda for what happens when you stop moving the slider
     
 }
 
