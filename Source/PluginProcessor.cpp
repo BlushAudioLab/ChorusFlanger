@@ -42,7 +42,7 @@ ChorusFlangerAudioProcessor::ChorusFlangerAudioProcessor()
     mFeedbackLeft = 0;
     mFeedbackRight = 0;
     
-    
+    mLFOPhase = 0;
 
 }
 
@@ -129,7 +129,10 @@ void ChorusFlangerAudioProcessor::changeProgramName (int index, const String& ne
 void ChorusFlangerAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     
+   
     mDelayTimeSmoothed = 1;
+    
+    mLFOPhase = 0;
     
     mCircularBufferLength = sampleRate * MAX_DELAY_TIME;
     
@@ -187,14 +190,23 @@ void ChorusFlangerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
             buffer.clear (i, 0, buffer.getNumSamples());
-
-        
+    
         float* leftChannel = buffer.getWritePointer(0);
         float* rightChannel = buffer.getWritePointer(1);
         
         for (int i = 0; i < buffer.getNumSamples(); i++) {
             
-            //mDelayTimeSmoothed = 1;
+            float lfoOut = sin(2*M_PI * mLFOPhase); // calculate sine LFO waveform based on y=sin(2pi * x)
+            
+            mLFOPhase += *mRateParameter * getSampleRate(); // moves the LFO phase forwards
+                
+            if (mLFOPhase > 1) {
+                    mLFOPhase -= 1;
+                } //this if statement wraps the LFO Phase between 0 and 1
+            
+            float lfoOutMapped = jmap(lfoOut, -1.f, 1.f, 0.005f, 0.03f);
+            
+            mDelayTimeSmoothed = mDelayTimeSmoothed - 0.001 * (mDelayTimeSmoothed - lfoOutMapped);
             mDelayTimeInSamples = getSampleRate() * mDelayTimeSmoothed;
             
             mCircularBufferLeft[mCircularBufferWriteHead] = leftChannel[i] + mFeedbackLeft;
