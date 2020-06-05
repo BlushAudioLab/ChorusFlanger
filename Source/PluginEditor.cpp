@@ -38,7 +38,7 @@ ChorusFlangerAudioProcessorEditor::ChorusFlangerAudioProcessorEditor (ChorusFlan
     
     /*This bit is the Feedback Slider*/
     
-    AudioParameterFloat* mFeedbackParameter = (AudioParameterFloat*)params.getUnchecked(1); //set to 1 because it is the 2nd parameter - indexing from 0
+    AudioParameterFloat* mFeedbackParameter = (AudioParameterFloat*)params.getUnchecked(4); //set to 1 because it is the 2nd parameter - indexing from 0
     
     mFeedbackSlider.setBounds(100, 0, 100, 100); //sets the position and size
     mFeedbackSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag); //sets style
@@ -53,18 +53,18 @@ ChorusFlangerAudioProcessorEditor::ChorusFlangerAudioProcessorEditor (ChorusFlan
     
     /*This bit is the Feedback Slider*/
     
-    AudioParameterFloat* mDelayTimeParameter = (AudioParameterFloat*)params.getUnchecked(2); //set to 2 because it is the 3rd parameter - indexing from 0
+    //AudioParameterFloat* mDelayTimeParameter = (AudioParameterFloat*)params.getUnchecked(2); //set to 2 because it is the 3rd parameter - indexing from 0
     
-    mDelayTimeSlider.setBounds(200, 0, 100, 100); //sets the position and size
-    mDelayTimeSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag); //sets style
-    mDelayTimeSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0); //gets rid of the slider text box from the UI
-    mDelayTimeSlider.setRange(mDelayTimeParameter->range.start, mDelayTimeParameter->range.end); //sets the range
-    mDelayTimeSlider.setValue(*mDelayTimeParameter); //sets the slider value to the current value of the dry wet parameter in the processor
-    addAndMakeVisible(mDelayTimeSlider); //makes the slider visible on the screen
+    //mDelayTimeSlider.setBounds(200, 0, 100, 100); //sets the position and size
+    //mDelayTimeSlider.setSliderStyle(Slider::SliderStyle::RotaryVerticalDrag); //sets style
+    //mDelayTimeSlider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0); //gets rid of the slider text box from the UI
+    //mDelayTimeSlider.setRange(mDelayTimeParameter->range.start, mDelayTimeParameter->range.end); //sets the range
+    //mDelayTimeSlider.setValue(*mDelayTimeParameter); //sets the slider value to the current value of the dry wet parameter in the processor
+    //addAndMakeVisible(mDelayTimeSlider); //makes the slider visible on the screen
     
-    mDelayTimeSlider.onValueChange = [this, mDelayTimeParameter] { *mDelayTimeParameter = mDelayTimeSlider.getValue(); }; //lambda function to update slider when the parameter value is changed
-    mDelayTimeSlider.onDragStart = [mDelayTimeParameter] { mDelayTimeParameter->beginChangeGesture(); }; //lambda for what happens when you start dragging the slider
-    mDelayTimeSlider.onDragEnd = [mDelayTimeParameter] { mDelayTimeParameter->endChangeGesture(); }; //lambda for what happens when you stop moving the slider
+    //mDelayTimeSlider.onValueChange = [this, mDelayTimeParameter] { *mDelayTimeParameter = mDelayTimeSlider.getValue(); }; //lambda function to update slider when the parameter value is changed
+    //mDelayTimeSlider.onDragStart = [mDelayTimeParameter] { mDelayTimeParameter->beginChangeGesture(); }; //lambda for what happens when you start dragging the slider
+    //mDelayTimeSlider.onDragEnd = [mDelayTimeParameter] { mDelayTimeParameter->endChangeGesture(); }; //lambda for what happens when you stop moving the slider
     
 }
 

@@ -20,9 +20,15 @@ ChorusFlangerAudioProcessor::ChorusFlangerAudioProcessor()
 {
     addParameter(mDryWetParameter = new AudioParameterFloat("drywet", "Dry Wet", 0.0, 1.0, 0.5));
     
+    addParameter(mDepthParameter = new AudioParameterFloat("depth", "Depth", 0.0, 1.0, 0.5));
+    
+    addParameter(mRateParameter = new AudioParameterFloat("rate", "Rate", 0.1f, 20.f, 10.f));
+    
+    addParameter(mPhaseOffsetParameter = new AudioParameterFloat("phaseOffset", "Phase Offset", 0.0, 1.f, 0.f));
+    
     addParameter(mFeedbackParameter = new AudioParameterFloat("feedback", "Feedback Amount", 0.0, 0.98, 0.5));
     
-    addParameter(mDelayTimeParameter = new AudioParameterFloat("delaytime", "Delay Time", 0.01, MAX_DELAY_TIME, 0.2));
+    addParameter(mTypeParameter = new AudioParameterInt("type", "Type", 0, 1, 0));
     
     
     mDelayTimeSmoothed = 0;
@@ -123,7 +129,7 @@ void ChorusFlangerAudioProcessor::changeProgramName (int index, const String& ne
 void ChorusFlangerAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     
-    mDelayTimeInSamples = sampleRate * *mDelayTimeParameter;
+    mDelayTimeSmoothed = 1;
     
     mCircularBufferLength = sampleRate * MAX_DELAY_TIME;
     
@@ -143,7 +149,7 @@ void ChorusFlangerAudioProcessor::prepareToPlay (double sampleRate, int samplesP
     
     mCircularBufferWriteHead = 0;
     
-    mDelayTimeSmoothed = *mDelayTimeParameter;
+    
 }
 
 void ChorusFlangerAudioProcessor::releaseResources()
@@ -188,7 +194,7 @@ void ChorusFlangerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
         
         for (int i = 0; i < buffer.getNumSamples(); i++) {
             
-            mDelayTimeSmoothed = mDelayTimeSmoothed - 0.001 * (mDelayTimeSmoothed - *mDelayTimeParameter);
+            //mDelayTimeSmoothed = 1;
             mDelayTimeInSamples = getSampleRate() * mDelayTimeSmoothed;
             
             mCircularBufferLeft[mCircularBufferWriteHead] = leftChannel[i] + mFeedbackLeft;

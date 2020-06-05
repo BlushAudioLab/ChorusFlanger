@@ -61,8 +61,12 @@ private:
     
     AudioParameterFloat* mDryWetParameter;
     AudioParameterFloat* mFeedbackParameter;
-    AudioParameterFloat* mDelayTimeParameter;
+    AudioParameterFloat* mDepthParameter;
+    AudioParameterFloat* mRateParameter;
+    AudioParameterFloat* mPhaseOffsetParameter;
     
+    
+    AudioParameterInt* mTypeParameter;
 
     float mFeedbackLeft;
     float mFeedbackRight;
