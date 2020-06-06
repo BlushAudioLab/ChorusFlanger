@@ -30,7 +30,6 @@ ChorusFlangerAudioProcessor::ChorusFlangerAudioProcessor()
     
     addParameter(mTypeParameter = new AudioParameterInt("type", "Type", 0, 1, 0));
     
-    
     mDelayTimeSmoothed = 0;
     mCircularBufferLeft = nullptr;
     mCircularBufferRight = nullptr;
@@ -43,6 +42,8 @@ ChorusFlangerAudioProcessor::ChorusFlangerAudioProcessor()
     mFeedbackRight = 0;
     
     mLFOPhase = 0;
+    
+    
 
 }
 
@@ -129,7 +130,6 @@ void ChorusFlangerAudioProcessor::changeProgramName (int index, const String& ne
 void ChorusFlangerAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     
-   
     mDelayTimeSmoothed = 1;
     
     mLFOPhase = 0;

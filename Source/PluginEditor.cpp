@@ -99,12 +99,23 @@ ChorusFlangerAudioProcessorEditor::ChorusFlangerAudioProcessorEditor (ChorusFlan
     
     
     
-    /*
-     
-     This is where the button for selecting the Effect Type will go
-     
-     
-     */
+    /*This is where the button for selecting the Effect Type will go*/
+    
+    AudioParameterInt* mTypeParameter = (AudioParameterInt*)params.getUnchecked(5);
+    
+    mType.setBounds(100, 100, 100, 30); //sets positions and size
+    mType.addItem("Chorus", 1);
+    mType.addItem("Flanger", 2);
+    addAndMakeVisible(mType);
+    
+    mType.onChange = [this, mTypeParameter] {
+        
+        mTypeParameter->beginChangeGesture();
+        *mTypeParameter = mType.getSelectedItemIndex();
+        mTypeParameter->endChangeGesture();
+    };
+    
+    mType.setSelectedItemIndex(*mTypeParameter);
     
     
 }
