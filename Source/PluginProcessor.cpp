@@ -218,8 +218,20 @@ void ChorusFlangerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
                 mDelayReadHead += mCircularBufferLength;
             }
             
-            float delay_sample_left = mCircularBufferLeft[(int)mDelayReadHead];
-            float delay_sample_right = mCircularBufferRight[(int)mDelayReadHead];
+            int readHead_x = (int)mDelayReadHead; //casting the read head value as an integer
+            int readHead_x1 = readHead_x + 1; // getting the next index in the array for the readhead
+
+            float readHeadFloat = mDelayReadHead - readHead_x; // we are now subtracting the integer version of the read head from the original floating point version
+            
+            if (readHead_x1 >= mCircularBufferLength){ //making sure the next sample isn't at the end of the circ buffer
+                 readHead_x1 -= mCircularBufferLength;
+             }
+            
+            
+            float delay_sample_left = lin_interp(mCircularBufferLeft [readHead_x], mCircularBufferLeft [readHead_x1], readHeadFloat);
+
+            float delay_sample_right = lin_interp(mCircularBufferRight [readHead_x], mCircularBufferRight [readHead_x1], readHeadFloat);
+
             
             mFeedbackLeft = delay_sample_left * *mFeedbackParameter;
             mFeedbackRight = delay_sample_right * *mFeedbackParameter;
@@ -265,4 +277,9 @@ void ChorusFlangerAudioProcessor::setStateInformation (const void* data, int siz
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new ChorusFlangerAudioProcessor();
+}
+
+float ChorusFlangerAudioProcessor::lin_interp(float sample_x, float sample_x1, float inPhase)
+{
+  return (1 - inPhase) * sample_x + inPhase * sample_x1;
 }
