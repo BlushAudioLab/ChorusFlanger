@@ -198,11 +198,14 @@ void ChorusFlangerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
             
             float lfoOut = sin(2*M_PI * mLFOPhase); // calculate sine LFO waveform based on y=sin(2pi * x)
             
-            mLFOPhase += *mRateParameter * getSampleRate(); // moves the LFO phase forwards
+            mLFOPhase += *mRateParameter / getSampleRate(); // moves the LFO phase forwards
                 
             if (mLFOPhase > 1) {
                     mLFOPhase -= 1;
                 } //this if statement wraps the LFO Phase between 0 and 1
+            
+            lfoOut *= *mDepthParameter;
+            
             
             float lfoOutMapped = jmap(lfoOut, -1.f, 1.f, 0.005f, 0.03f);
             
