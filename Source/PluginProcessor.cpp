@@ -193,33 +193,34 @@ void ChorusFlangerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
             
             float lfoOutLeft = sin(2*M_PI * mLFOPhase); // calculate sine LFO waveform based on y=sin(2pi * x)
             
-            //float lfoOut = (2 * (1/M_PI)) * asin(sin  ( (2*M_PI / 1) * mLFOPhase)); // Triangle Wave LFO! - Experimental code. Comment out Sine first.
-            
-            //float lfoOut = pow((-1), floor(2*(1-0) / (1 / mLFOPhase))); // Very experimental attempt at a Square Wave. Needs smoothing. A lot!
-            
-            //float lfoOut = (2 / M_PI) * atan(tan((mLFOPhase * M_PI) / 2 )); // Having a go at a Sawtooth Wave. Needs a bunch of smoothing out!
-            
-            
-            lfoOutLeft *= *mDepthParameter;
-            
-            
-            float lfoOutMappedLeft = jmap(lfoOutLeft, -1.f, 1.f, 0.005f, 0.03f);
-            float delayTimeSamplesLeft = getSampleRate() * lfoOutMappedLeft;
-            
-            
             float lfoPhaseRight = mLFOPhase + *mPhaseOffsetParameter;
-            
+                       
             if (lfoPhaseRight > 1){
                 lfoPhaseRight -= 1;
             }
             
-            
-            
             float lfoOutRight = sin(2*M_PI * lfoPhaseRight);
             
+            lfoOutLeft *= *mDepthParameter;
             lfoOutRight *= *mDepthParameter;
             
-            float lfoOutMappedRight = jmap(lfoOutRight, -1.f, 1.f, 0.005f, 0.03f);
+            /* Chorus Effect Selection */
+            
+            float lfoOutMappedLeft = 0;
+            float lfoOutMappedRight = 0;
+            
+            if (*mTypeParameter == 0){
+                lfoOutMappedLeft = jmap(lfoOutLeft, -1.f, 1.f, 0.005f, 0.03f);
+                lfoOutMappedRight = jmap(lfoOutRight, -1.f, 1.f, 0.005f, 0.03f);
+            }
+            /* Flanger Effect Selection */
+            else {
+                lfoOutMappedLeft = jmap(lfoOutLeft, -1.f, 1.f, 0.001f, 0.005f);
+                lfoOutMappedRight = jmap(lfoOutRight, -1.f, 1.f, 0.001f, 0.005f);
+            }
+            
+            
+            float delayTimeSamplesLeft = getSampleRate() * lfoOutMappedLeft;
             float delayTimeSamplesRight = getSampleRate() * lfoOutMappedRight;
             
             
