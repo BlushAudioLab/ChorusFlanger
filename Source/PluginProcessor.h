@@ -61,8 +61,6 @@ private:
     
     float mLFOPhase;
     
-    float mDelayTimeSmoothed;
-    
     AudioParameterFloat* mDryWetParameter;
     AudioParameterFloat* mFeedbackParameter;
     AudioParameterFloat* mDepthParameter;
@@ -74,9 +72,6 @@ private:
 
     float mFeedbackLeft;
     float mFeedbackRight;
-    
-    float mDelayTimeInSamples;
-    float mDelayReadHead;
     
     int mCircularBufferWriteHead;
     int mCircularBufferLength;

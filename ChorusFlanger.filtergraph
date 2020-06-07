@@ -46,11 +46,11 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="7" x="0.37875" y="0.2423076923076923" uiLastX_Normal="330"
-          uiLastY_Normal="238" uiopen_Normal="1">
+  <FILTER uid="7" x="0.37875" y="0.2423076923076923" uiLastX_Normal="477"
+          uiLastY_Normal="227" uiopen_Normal="0">
     <PLUGIN name="AUAudioFilePlayer" format="AudioUnit" category="Generator"
             manufacturer="Apple" version="1.6.0" file="AudioUnit:Generators/augn,afpl,appl"
-            uid="6163676e" isInstrument="0" fileTime="0" infoUpdateTime="17289e3de05"
+            uid="6163676e" isInstrument="0" fileTime="0" infoUpdateTime="1728a5f42a8"
             numInputs="0" numOutputs="2" isShell="0"/>
     <STATE>907.hAGaoMGcv.C1AHv.DTfAGfPBJr.IkXxIpvUag4VclE1XzUmbkIGUjEFcg8EDarVPUAkbkMWYzAUYxMWZyQWYtQ2TzEFcksTY4c0b0IFc4AWYWYWYxMWZu4FUzkGbk8EDOXVZrUVKxUlYkIWYtMVYyQkag0VYRDFbvwFPhxfFR2fCO.AVFkFak4TXsU1URU1Yo8lay8EDX8hUuwVcsU1buHDa0MGZfDTcjk1afTDdzUlbtEFauLUXsAGakMGHq.xTg0FbrUFHPE1XqM2KFUGc0IWYfzTcyk1XfLDQw7hQMECHs.BUxE1XqABL43xcgYWnQPsDSPQEVbgEY3kTkcVZu4FQuU1bL81avokTkcVZu4FQgQWXeAADIM2TkwVYiQWYjIUYmk1atokTkcVZu4lSg0VYI7DDvA..........vRcbBD.....XdzM...F....9k...fA..vRcbBD.....XdzM...F..DPe0cG.....A................................................................OCC......PBZ4TY2AhTkcVZu41zM3vFbzgEdkzbSUFakMFckQlQowVYeAgkuX0arUWakM2KBwVcygFHAUGYo8FHEgGckImagw1KSEVavwVYyAxJfLUXsAGakABTgM1Zy8xTg0FbrUFbn8laoM1bfLTSf.UXisFHx.SL17BTxUFczkGHLkFczwVYfL0a04FYy8RS0MWZiABSu8Fby8RSkw1ajkVYy8RLwTyWGMRae0TYr8FY4w1auA2WSA0WvDiK2Elcg5A0RLAEUXAHVHRBOAAb...........7NMl.A.....RFcC..fA...7WI...X...7NMl.A.....RFcC..fA..A7We+A....P...............................................................vE7r.......jfVNU1cfHUYmk1atkfDgYFbrAA.RDVcm4lznjxCbXkQowVYfDiUFkFakAhLXUkazkFcrUFY.f..Y.fI.rB.IAPT.jE.dA.b.TG.5Avd.3G.CB.i.PI.uCP7.ne.ID.EAbR.xDvLAXZ.mFfrAja.HKPXBLl.rIPaB.t.gK.6Bzt.xK.8Bju.9OPACv........f.A.........vJ..................v.U.</STATE>
     <LAYOUT>
@@ -61,11 +61,11 @@
     </LAYOUT>
   </FILTER>
   <FILTER uid="9" x="0.425" y="0.5076923076923077" uiLastX_Normal="223"
-          uiLastY_Normal="336" uiopen_Normal="1" uiLastX_Generic="1204"
+          uiLastY_Normal="336" uiopen_Normal="0" uiLastX_Generic="1204"
           uiLastY_Generic="311" uiopen_Generic="1">
     <PLUGIN name="ChorusFlanger" format="AudioUnit" category="Effect" manufacturer="Blush Audio"
             version="1.0.0" file="AudioUnit:Effects/aufx,Wvqw,Manu" uid="7b62797a"
-            isInstrument="0" fileTime="0" infoUpdateTime="17289e3de05" numInputs="2"
+            isInstrument="0" fileTime="0" infoUpdateTime="1728a5f42a8" numInputs="2"
             numOutputs="2" isShell="0"/>
     <STATE>253.hAGaoMGcv.y0AHv.DTfAGfPBJHwDTTAWsEla0YVXiQWcxUlbTQVXzEFWkwVYsUlaz0hag0VYWMWchQWdvU1U1Ulbyk1atQEc4AWYT4VXsUlDMEla08DD7...............F.PMLAtO9aKq.Xyi5.....PAvp7v+....TxZQ3N.....wLR3a+C....cUtdg+H.m7J8BLz.DQESTxDsCODELUkjavUGcQ6PDV8TczAWczIwU1E2cP.fDgUmY3gUUtQWZzwVYjgvEjjhM9XzRPUEkYtYmfJJpqJ6s45K.......P.A.........fE....................GC</STATE>
     <LAYOUT>
