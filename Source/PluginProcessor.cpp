@@ -30,13 +30,10 @@ ChorusFlangerAudioProcessor::ChorusFlangerAudioProcessor()
     
     addParameter(mTypeParameter = new AudioParameterInt("type", "Type", 0, 1, 0));
     
-    mDelayTimeSmoothed = 0;
     mCircularBufferLeft = nullptr;
     mCircularBufferRight = nullptr;
     mCircularBufferWriteHead = 0.;
     mCircularBufferLength = 0.;
-    mDelayTimeInSamples = 0.;
-    mDelayReadHead = 0.;
     
     mFeedbackLeft = 0;
     mFeedbackRight = 0;
@@ -130,8 +127,6 @@ void ChorusFlangerAudioProcessor::changeProgramName (int index, const String& ne
 void ChorusFlangerAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     
-    mDelayTimeSmoothed = 1;
-    
     mLFOPhase = 0;
     
     mCircularBufferLength = sampleRate * MAX_DELAY_TIME;
@@ -196,7 +191,37 @@ void ChorusFlangerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
         
         for (int i = 0; i < buffer.getNumSamples(); i++) {
             
-            float lfoOut = sin(2*M_PI * mLFOPhase); // calculate sine LFO waveform based on y=sin(2pi * x)
+            float lfoOutLeft = sin(2*M_PI * mLFOPhase); // calculate sine LFO waveform based on y=sin(2pi * x)
+            
+            //float lfoOut = (2 * (1/M_PI)) * asin(sin  ( (2*M_PI / 1) * mLFOPhase)); // Triangle Wave LFO! - Experimental code. Comment out Sine first.
+            
+            //float lfoOut = pow((-1), floor(2*(1-0) / (1 / mLFOPhase))); // Very experimental attempt at a Square Wave. Needs smoothing. A lot!
+            
+            //float lfoOut = (2 / M_PI) * atan(tan((mLFOPhase * M_PI) / 2 )); // Having a go at a Sawtooth Wave. Needs a bunch of smoothing out!
+            
+            
+            lfoOutLeft *= *mDepthParameter;
+            
+            
+            float lfoOutMappedLeft = jmap(lfoOutLeft, -1.f, 1.f, 0.005f, 0.03f);
+            float delayTimeSamplesLeft = getSampleRate() * lfoOutMappedLeft;
+            
+            
+            float lfoPhaseRight = mLFOPhase + *mPhaseOffsetParameter;
+            
+            if (lfoPhaseRight > 1){
+                lfoPhaseRight -= 1;
+            }
+            
+            
+            
+            float lfoOutRight = sin(2*M_PI * lfoPhaseRight);
+            
+            lfoOutRight *= *mDepthParameter;
+            
+            float lfoOutMappedRight = jmap(lfoOutRight, -1.f, 1.f, 0.005f, 0.03f);
+            float delayTimeSamplesRight = getSampleRate() * lfoOutMappedRight;
+            
             
             mLFOPhase += *mRateParameter / getSampleRate(); // moves the LFO phase forwards
                 
@@ -204,36 +229,44 @@ void ChorusFlangerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
                     mLFOPhase -= 1;
                 } //this if statement wraps the LFO Phase between 0 and 1
             
-            lfoOut *= *mDepthParameter;
-            
-            
-            float lfoOutMapped = jmap(lfoOut, -1.f, 1.f, 0.005f, 0.03f);
-            
-            mDelayTimeSmoothed = mDelayTimeSmoothed - 0.001 * (mDelayTimeSmoothed - lfoOutMapped);
-            mDelayTimeInSamples = getSampleRate() * mDelayTimeSmoothed;
             
             mCircularBufferLeft[mCircularBufferWriteHead] = leftChannel[i] + mFeedbackLeft;
             mCircularBufferRight[mCircularBufferWriteHead] = rightChannel[i] + mFeedbackRight;
             
-            mDelayReadHead = mCircularBufferWriteHead - mDelayTimeInSamples;
+            float delayReadHeadLeft = mCircularBufferWriteHead - delayTimeSamplesLeft;
             
-            if (mDelayReadHead < 0) {
-                mDelayReadHead += mCircularBufferLength;
+            if (delayReadHeadLeft < 0){
+                delayReadHeadLeft += mCircularBufferLength;
             }
             
-            int readHead_x = (int)mDelayReadHead; //casting the read head value as an integer
-            int readHead_x1 = readHead_x + 1; // getting the next index in the array for the readhead
-
-            float readHeadFloat = mDelayReadHead - readHead_x; // we are now subtracting the integer version of the read head from the original floating point version
+            float delayReadHeadRight = mCircularBufferWriteHead - delayTimeSamplesRight;
             
-            if (readHead_x1 >= mCircularBufferLength){ //making sure the next sample isn't at the end of the circ buffer
-                 readHead_x1 -= mCircularBufferLength;
+            if (delayReadHeadRight < 0){
+                delayReadHeadRight += mCircularBufferLength;
+            }
+            
+            
+            int readHeadLeft_x = (int)delayReadHeadLeft; //casting the read head value as an integer
+            int readHeadLeft_x1 = readHeadLeft_x + 1; // getting the next index in the array for the readhead
+            float readHeadFloatLeft = delayReadHeadLeft - readHeadLeft_x; // we are now subtracting the integer version of the read head from the original floating point version
+            
+            if (readHeadLeft_x1 >= mCircularBufferLength){ //making sure the next sample isn't at the end of the circ buffer
+                 readHeadLeft_x1 -= mCircularBufferLength;
              }
             
             
-            float delay_sample_left = lin_interp(mCircularBufferLeft [readHead_x], mCircularBufferLeft [readHead_x1], readHeadFloat);
+            int readHeadRight_x = (int)delayReadHeadRight; //casting the read head value as an integer
+            int readHeadRight_x1 = readHeadRight_x + 1; // getting the next index in the array for the readhead
+            float readHeadFloatRight = delayReadHeadRight - readHeadRight_x; // we are now subtracting the integer version of the read head from the original floating point version
+                       
+            if (readHeadRight_x1 >= mCircularBufferLength){ //making sure the next sample isn't at the end of the circ buffer
+                            readHeadRight_x1 -= mCircularBufferLength;
+                        }
+            
+            
+            float delay_sample_left = lin_interp(mCircularBufferLeft [readHeadLeft_x], mCircularBufferLeft [readHeadLeft_x1], readHeadFloatLeft);
 
-            float delay_sample_right = lin_interp(mCircularBufferRight [readHead_x], mCircularBufferRight [readHead_x1], readHeadFloat);
+            float delay_sample_right = lin_interp(mCircularBufferRight [readHeadRight_x], mCircularBufferRight [readHeadRight_x1], readHeadFloatRight);
 
             
             mFeedbackLeft = delay_sample_left * *mFeedbackParameter;
