@@ -40,6 +40,11 @@ ChorusFlangerAudioProcessor::ChorusFlangerAudioProcessor()
     
     mLFOPhase = 0;
     
+    mDryWetSmoothed = 0;
+    mDepthSmoothed = 0;
+    mPhaseOffsetSmoothed = 0;
+    mTypeParamterSmoothed = 0;
+    
     
 
 }
@@ -148,6 +153,9 @@ void ChorusFlangerAudioProcessor::prepareToPlay (double sampleRate, int samplesP
     mCircularBufferWriteHead = 0;
     
     
+    mDepthSmoothed = *mDepthParameter;
+    mTypeParamterSmoothed = *mTypeParameter;
+    
 }
 
 void ChorusFlangerAudioProcessor::releaseResources()
@@ -191,25 +199,45 @@ void ChorusFlangerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
         
         for (int i = 0; i < buffer.getNumSamples(); i++) {
             
-            float lfoOutLeft = sin(2*M_PI * mLFOPhase); // calculate sine LFO waveform based on y=sin(2pi * x)
             
-            float lfoPhaseRight = mLFOPhase + *mPhaseOffsetParameter;
+            /* Parameter Smoothing*/
+            
+            mDryWetSmoothed = mDryWetSmoothed - 0.001 * (mDryWetSmoothed - *mDryWetParameter);
+            mDepthSmoothed = mDepthSmoothed - 0.001 * (mDepthSmoothed - *mDepthParameter);
+            mPhaseOffsetSmoothed = mPhaseOffsetSmoothed - 0.001 * (mPhaseOffsetSmoothed - *mPhaseOffsetParameter);
+            
+            
+            /* LFO Generation */
+            
+            //float lfoOutLeft = sin(2*M_PI * mLFOPhase); // calculate sine LFO waveform based on y=sin(2pi * x)
+            float lfoOutLeft = (2 * (1/M_PI)) * asin(sin  ( (2*M_PI / 1) * mLFOPhase)) - 1;
+            
+            float lfoPhaseRight = mLFOPhase + mPhaseOffsetSmoothed;
                        
             if (lfoPhaseRight > 1){
                 lfoPhaseRight -= 1;
             }
             
-            float lfoOutRight = sin(2*M_PI * lfoPhaseRight);
+            //float lfoOutRight = sin(2*M_PI * lfoPhaseRight);
             
-            lfoOutLeft *= *mDepthParameter;
-            lfoOutRight *= *mDepthParameter;
+            float lfoOutRight = (2 * (1/M_PI)) * asin(sin  ( (2*M_PI / 1) * lfoPhaseRight)) - 1;
+            
+            
+            /* Multiplying the LFO by the Depth Parameter*/
+            
+            lfoOutLeft *= (mDepthSmoothed / 2);
+            lfoOutRight *= (mDepthSmoothed / 2);
             
             /* Chorus Effect Selection */
             
             float lfoOutMappedLeft = 0;
             float lfoOutMappedRight = 0;
             
-            if (*mTypeParameter == 0){
+            int mTypeParameterSmoothed = *mTypeParameter;
+            
+            mTypeParamterSmoothed = mTypeParamterSmoothed - 0.001 * (mTypeParamterSmoothed - *mTypeParameter);
+            
+            if (mTypeParameterSmoothed == 0){
                 lfoOutMappedLeft = jmap(lfoOutLeft, -1.f, 1.f, 0.005f, 0.03f);
                 lfoOutMappedRight = jmap(lfoOutRight, -1.f, 1.f, 0.005f, 0.03f);
             }
@@ -276,8 +304,8 @@ void ChorusFlangerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
             
             mCircularBufferWriteHead++;
             
-            buffer.setSample(0, i, buffer.getSample(0, i) * (1 - *mDryWetParameter) + delay_sample_left * *mDryWetParameter);
-            buffer.setSample(1, i, buffer.getSample(1, i) * (1 - *mDryWetParameter) + delay_sample_right * *mDryWetParameter);
+            buffer.setSample(0, i, buffer.getSample(0, i) * (1 - mDryWetSmoothed) + delay_sample_left * mDryWetSmoothed);
+            buffer.setSample(1, i, buffer.getSample(1, i) * (1 - mDryWetSmoothed) + delay_sample_right * mDryWetSmoothed);
             
             if (mCircularBufferWriteHead >= mCircularBufferLength) {
                 mCircularBufferWriteHead = 0;

@@ -59,6 +59,11 @@ public:
     
 private:
     
+    float mDryWetSmoothed;
+    float mPhaseOffsetSmoothed;
+    float mDepthSmoothed;
+    int mTypeParamterSmoothed;
+    
     float mLFOPhase;
     
     AudioParameterFloat* mDryWetParameter;
