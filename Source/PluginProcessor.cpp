@@ -242,9 +242,10 @@ void ChorusFlangerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
                 lfoOutMappedRight = jmap(lfoOutRight, -1.f, 1.f, 0.005f, 0.03f);
             }
             /* Flanger Effect Selection */
-            else {
+            if (mTypeParameterSmoothed == 1){
                 lfoOutMappedLeft = jmap(lfoOutLeft, -1.f, 1.f, 0.001f, 0.005f);
                 lfoOutMappedRight = jmap(lfoOutRight, -1.f, 1.f, 0.001f, 0.005f);
+                *mRateParameter = *mRateParameter / 2.f;
             }
             
             
@@ -337,6 +338,20 @@ void ChorusFlangerAudioProcessor::getStateInformation (MemoryBlock& destData)
     
     copyXmlToBinary(*xml, destData);
     
+    
+    std::unique_ptr<XmlElement> xml1(new XmlElement("ChorusFlangerPreset"));
+    
+    xml->setAttribute("DryWet", 0.5);
+    xml->setAttribute("Feedback", 0.1);
+    xml->setAttribute("Depth", 0.1);
+    xml->setAttribute("Rate", 0.1);
+    xml->setAttribute("PhaseOffset", 0.8);
+    xml->setAttribute("Type", 1);
+    
+    copyXmlToBinary(*xml1, destData);
+    
+    
+    
 }
 
 void ChorusFlangerAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
@@ -355,7 +370,19 @@ void ChorusFlangerAudioProcessor::setStateInformation (const void* data, int siz
         
     }
     
+    std::unique_ptr<XmlElement> xml1(getXmlFromBinary(data, sizeInBytes));
     
+    if (xml1.get() != nullptr && xml->hasTagName("ChorusFlangerPreset"))
+    {
+        *mDryWetParameter = xml->getDoubleAttribute("DryWet");
+        *mFeedbackParameter = xml->getDoubleAttribute("Feedback");
+        *mDepthParameter = xml->getDoubleAttribute("Depth");
+        *mRateParameter = xml->getDoubleAttribute("Rate");
+        *mPhaseOffsetParameter = xml->getDoubleAttribute("PhaseOffset");
+        *mTypeParameter = xml->getIntAttribute("Type");
+        
+        
+    }
     
     
 }

@@ -50,7 +50,7 @@
           uiLastY_Normal="227" uiopen_Normal="1">
     <PLUGIN name="AUAudioFilePlayer" format="AudioUnit" category="Generator"
             manufacturer="Apple" version="1.6.0" file="AudioUnit:Generators/augn,afpl,appl"
-            uid="6163676e" isInstrument="0" fileTime="0" infoUpdateTime="172942d2f25"
+            uid="6163676e" isInstrument="0" fileTime="0" infoUpdateTime="17294d6e154"
             numInputs="0" numOutputs="2" isShell="0"/>
     <STATE>907.hAGaoMGcv.C1AHv.DTfAGfPBJr.IkXxIpvUag4VclE1XzUmbkIGUjEFcg8EDarVPUAkbkMWYzAUYxMWZyQWYtQ2TzEFcksTY4c0b0IFc4AWYWYWYxMWZu4FUzkGbk8EDOXVZrUVKxUlYkIWYtMVYyQkag0VYRDFbvwFPhxfFR2fCO.AVFkFak4TXsU1URU1Yo8lay8EDX8hUuwVcsU1buHDa0MGZfDTcjk1afTDdzUlbtEFauLUXsAGakMGHq.xTg0FbrUFHPE1XqM2KFUGc0IWYfzTcyk1XfLDQw7hQMECHs.BUxE1XqABL43xcgYWnQPsDSPQEVbgEY3kTkcVZu4FQuU1bL81avokTkcVZu4FQgQWXeAADIM2TkwVYiQWYjIUYmk1atokTkcVZu4lSg0VYI7DDvA..........vRcbBD.....XdzM...F....9k...fA..vRcbBD.....XdzM...F..DPe0cG.....A................................................................OCC......PBZ4TY2AhTkcVZu41zM3vFbzgEdkzbSUFakMFckQlQowVYeAgkuX0arUWakM2KBwVcygFHAUGYo8FHEgGckImagw1KSEVavwVYyAxJfLUXsAGakABTgM1Zy8xTg0FbrUFbn8laoM1bfLTSf.UXisFHx.SL17BTxUFczkGHLkFczwVYfL0a04FYy8RS0MWZiABSu8Fby8RSkw1ajkVYy8RLwTyWGMRae0TYr8FY4w1auA2WSA0WvDiK2Elcg5A0RLAEUXAHVHRBOAAb...........7NMl.A.....RFcC..fA...7WI...X...7NMl.A.....RFcC..fA..A7We+A....P...............................................................vE7r.......jfVNU1cfHUYmk1atkfDgYFbrAA.RDVcm4lznjxCbXkQowVYfDiUFkFakAhLXUkazkFcrUFY.f..Y.fI.rB.IAPT.jE.dA.b.TG.5Avd.3G.CB.i.PI.uCP7.ne.ID.EAbR.xDvLAXZ.mFfrAja.HKPXBLl.rIPaB.t.gK.6Bzt.xK.8Bju.9OPACv........f.A.........vJ..................v.U.</STATE>
     <LAYOUT>
@@ -61,13 +61,13 @@
     </LAYOUT>
   </FILTER>
   <FILTER uid="9" x="0.425" y="0.5076923076923077" uiLastX_Normal="223"
-          uiLastY_Normal="336" uiopen_Normal="0" uiLastX_Generic="1204"
+          uiLastY_Normal="336" uiopen_Normal="1" uiLastX_Generic="1204"
           uiLastY_Generic="311" uiopen_Generic="1">
     <PLUGIN name="ChorusFlanger" format="AudioUnit" category="Effect" manufacturer="Blush Audio"
             version="1.0.0" file="AudioUnit:Effects/aufx,Wvqw,Manu" uid="7b62797a"
-            isInstrument="0" fileTime="0" infoUpdateTime="172942d2f25" numInputs="2"
+            isInstrument="0" fileTime="0" infoUpdateTime="17294d6e154" numInputs="2"
             numOutputs="2" isShell="0"/>
-    <STATE>490.hAGaoMGcv.C1AHv.DTfAGfPBJrvDTTgEWvUag4VclE1XzUmbkIGUjEFcgwUYrUVak4Fcs3VXsU1UyUmXzkGbkckckI2bo8laTQWdvU1WP7fZ0MVYPwVcmklaSQWXzUFUtEVakIQSg4VcOAAO..............fA.TCSf6i+1xJ.17nN.....T.rJO7O....krVDtC....PLiD91+....PWkqW3OBvIuRyPCNDQTwDkLQ+.DQASUI4Fb0QWzOHgUOUGcvUGcRbkcwcGD.HQX0YFdOAAuVMjLgLK....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOCg1axU2bFwVXtcVYxABQxk2UkQWOh.iK0DSN4jSN4fCL4HiM0DyL2HBHFUVYjIVXisVOh.iK2TiHfPTYvQGZ8HRLt.iHfHUXzUVOh.iK3jSN4jSN4biMwTCNwPiLwHBHPgVXyU1SlY1bkQWOh.iK4TSN4jSN4bCN0PiLyHyM4HBHTkGbk0iHwHxK9..VU4FcoQGakQF.H.PF.XB.q..N..D.HAPS.7E.jAPZ.fJ.sBvq.DK.zBfs.vK.+Bfw.rL.MCfzADI.......f.A..........F..................P.ZB</STATE>
+    <STATE>372.hAGaoMGcv.C1AHv.DTfAGfPBJrvDTTgEWvUag4VclE1XzUmbkIGUjEFcgwUYrUVak4Fcs3VXsU1UyUmXzkGbkckckI2bo8laTQWdvU1WP7fZ0MVYPwVcmklaSQWXzUFUtEVakIQSg4VcOAAO..............fA.TCSf6i+1xJ.17nN.....T.rJO7O....krVDtC....PLiD91+....PWkqW3OBvIuRyPCNDQTwDkLQ+.DQASUI4Fb0QWzOHgUOUGcvUGcRbkcwcGD.HQX0YFdOAgQVMjLgzC....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOCg1axU2bFwVXtcVYxAkbkMWYz8hO.fUUtQWZzwVYjA.B.jA.l.vJ.fC..A.R.zD.eA.Y.jF.nBPq.7J.wB.s.XK.7Bvu.XL.KCPy.Hc.a........HP..........fA..................D.I</STATE>
     <LAYOUT>
       <INPUTS>
         <BUS index="0" layout="L R"/>
